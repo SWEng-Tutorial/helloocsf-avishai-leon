@@ -49,17 +49,28 @@ public class SimpleServer extends AbstractServer {
 			}
 			else if(request.startsWith("send Submitters IDs")){
 				//add code here to send submitters IDs to client
+				message.setMessage("214511214, 326489069");
+				client.sendToClient(message);
 			}
 			else if (request.startsWith("send Submitters")){
 				//add code here to send submitters names to client
+				message.setMessage("Avishai, Leon");
+				client.sendToClient(message);
 			}
 			else if (request.equals("what’s the time?")) {
 				//add code here to send the time to client
+				message.setMessage(message.getTimeStamp().toLocalTime().toString());
+				client.sendToClient(message);
 			}
 			else if (request.startsWith("multiply")){
 				//add code here to multiply 2 numbers received in the message and send result back to client
 				//(use substring method as shown above)
 				//message format: "multiply n*m"
+				String[] numbers = (request.split(" ")[1]).split("\\*");
+				int n = Integer.parseInt(numbers[0]);
+				int m = Integer.parseInt(numbers[1]);
+				message.setMessage(String.valueOf(n*m));
+				client.sendToClient(message);
 			}else{
 				//add code here to send received message to all clients.
 				//The string we received in the message is the message we will send back to all clients subscribed.
@@ -67,6 +78,8 @@ public class SimpleServer extends AbstractServer {
 					// message received: "Good morning"
 					// message sent: "Good morning"
 				//see code for changing submitters IDs for help
+				message.setMessage(request);
+				sendToAllClients(message);
 			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
